@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Reportar una vulnerabilidad
+    url: https://github.com/urtaav/fichaje-credenciales/security/advisories/new
+    about: Para problemas de seguridad usa el reporte privado, no un issue público.

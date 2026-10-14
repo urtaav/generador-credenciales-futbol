@@ -1,0 +1,892 @@
+:root {
+  --bg: #eef0ec;
+  --panel: #ffffff;
+  --ink: #1c211d;
+  --muted: #69716a;
+  --line: #d9ddd6;
+  --accent: #146c43;
+  --accent-ink: #ffffff;
+  --radius: 8px;
+  --font-ui: "Barlow", system-ui, sans-serif;
+  --font-card: "Barlow Condensed", "Arial Narrow", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.4 var(--font-ui);
+}
+
+/* ---------- App layout ---------- */
+
+.app {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  min-height: 100vh;
+}
+
+.panel {
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.panel-head { padding: 20px 20px 8px; }
+
+.panel-head h1 {
+  font: 800 28px/1 var(--font-card);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.panel-head p { margin: 0; color: var(--muted); font-size: 13px; }
+
+#form {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px 12px;
+}
+
+fieldset {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+  padding: 14px 0 16px;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+legend {
+  font: 700 13px var(--font-card);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0 0 2px;
+  float: left;
+  width: 100%;
+}
+
+label {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+label small { color: var(--muted); font-weight: 400; }
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  font: inherit;
+  font-size: 14px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+}
+
+textarea { resize: vertical; min-height: 110px; }
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible,
+.tab input:focus-visible + span,
+.design-opt input:focus-visible ~ .thumb,
+.firma-drop:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+input[type="color"] {
+  width: 100%;
+  height: 36px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.row.actions { grid-template-columns: auto auto; justify-content: start; }
+
+.check { display: flex; align-items: center; gap: 8px; }
+
+.hint { margin: 0; font-size: 12px; color: var(--muted); }
+.hint.error { color: #b42318; font-weight: 600; }
+.hint.ok { color: var(--accent); font-weight: 600; }
+
+[hidden] { display: none !important; }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  font: 600 13px var(--font-ui);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.btn:hover { border-color: var(--accent); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.btn-primary:hover { filter: brightness(1.08); }
+
+.btn-sm { padding: 6px 10px; font-size: 12px; justify-self: start; }
+
+.file-btn { display: inline-flex; }
+
+.btn-x {
+  border: 0;
+  background: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.btn-x:hover { color: #b42318; }
+
+/* ---------- Saved configs ---------- */
+
+.save-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+}
+
+.config-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.config-list:empty { display: none; }
+
+.config-list { max-height: 260px; overflow-y: auto; }
+
+.config-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.config-list li.active { border-color: var(--accent); background: #f1f8f4; }
+
+.config-name { font-weight: 600; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.config-date { display: block; font-size: 11px; color: var(--muted); font-weight: 400; }
+
+.config-actions { display: flex; gap: 4px; }
+
+.config-actions button {
+  font: 600 11px var(--font-ui);
+  padding: 4px 7px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+}
+
+.config-actions button:hover { border-color: var(--accent); }
+.config-actions .danger:hover { border-color: #b42318; color: #b42318; }
+
+/* ---------- Tabs / design picker ----------
+   Labels must be positioned: the hidden radios are absolute, and without a
+   positioned parent the browser scrolls the page to them on focus. */
+
+.tab, .design-opt { position: relative; }
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.tab input, .design-opt input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tab span {
+  display: block;
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tab input:checked + span { background: var(--accent); color: var(--accent-ink); }
+
+.designs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 8px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.design-opt {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.design-opt .thumb {
+  width: 100%;
+  aspect-ratio: 85.6 / 54;
+  border-radius: 4px;
+  border: 2px solid var(--line);
+  background: #fff;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.design-opt .thumb .card { zoom: .3; pointer-events: none; }
+
+.design-opt:hover .thumb { border-color: #a9b3ab; }
+.design-opt input:checked ~ .thumb { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(20, 108, 67, .25); }
+.design-opt input:checked ~ span { font-weight: 700; color: var(--accent); }
+
+/* ---------- Signatures ---------- */
+
+.firma {
+  display: grid;
+  grid-template-columns: 1fr 110px auto;
+  align-items: end;
+  gap: 6px;
+}
+
+.firma-drop {
+  height: 38px;
+  border: 1.5px dashed #a9b3ab;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: #fafbf9;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.firma-drop:hover, .firma-drop.drag { border-color: var(--accent); color: var(--accent); }
+
+.firma-drop img {
+  max-width: 100%;
+  max-height: 32px;
+  object-fit: contain;
+  grid-area: 1 / 1;
+}
+
+.firma-drop img:not([hidden]) + span { display: none; }
+
+.panel-foot {
+  border-top: 1px solid var(--line);
+  padding: 14px 20px 18px;
+  display: grid;
+  gap: 8px;
+}
+
+/* ---------- Preview ---------- */
+
+.preview {
+  padding: 24px;
+  display: grid;
+  gap: 28px;
+  align-content: start;
+  min-width: 0;
+}
+
+.preview h2 {
+  font: 700 13px var(--font-card);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.muestra {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.muestra .card { box-shadow: 0 6px 24px rgba(0, 0, 0, .12); }
+
+.hojas {
+  display: grid;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Sheets are laid out in real mm; the screen preview just zooms them out */
+.sheet {
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .12);
+  display: grid;
+  justify-content: center;
+  align-content: start;
+  zoom: var(--zoom, .6);
+}
+
+/* =========================================================
+   Card
+   Sizes are in em; JS sets font-size = short side / 18.
+   ========================================================= */
+
+.card {
+  --c1: #0b3d91;
+  --c2: #f2b705;
+  --on-c1: #ffffff;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  color: #1a1a1a;
+  font-family: var(--font-card);
+  display: flex;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cut .card { outline: .2mm dashed #9aa09b; }
+
+/* Header position */
+.hp-top { flex-direction: column; }
+.hp-bottom { flex-direction: column-reverse; }
+.hp-left { flex-direction: row; }
+.hp-right { flex-direction: row-reverse; }
+
+.head {
+  flex: none;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: .08em;
+  min-width: 0;
+  min-height: 0;
+  padding: .45em .75em .4em;
+  line-height: 1.05;
+  background: var(--c1);
+  color: var(--on-c1);
+}
+
+/* Side headers read bottom-to-top, like a book spine */
+.hp-left .head,
+.hp-right .head {
+  writing-mode: sideways-lr;
+  width: 3.7em;
+  padding: .75em .45em;
+}
+
+.liga {
+  font-weight: 800;
+  font-size: 1.1em;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  font-size: .62em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta b { font-weight: 800; color: var(--c2); }
+
+.main {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  gap: .45em .6em;
+  align-items: center;
+  padding: .55em .75em;
+}
+
+.bg { position: absolute; inset: 0; pointer-events: none; }
+.main > :not(.bg) { position: relative; }
+
+.photo { grid-area: photo; }
+.data { grid-area: data; }
+.num { grid-area: num; }
+.card-sign { grid-area: sign; }
+
+.photo {
+  --ph: 9em;
+  height: var(--ph);
+  width: calc(var(--ph) * .75); /* 3:4, like a passport photo */
+  border: .07em dashed #8a8f8b;
+  background: #f6f7f5;
+  display: grid;
+  place-items: center;
+}
+
+.photo span {
+  font-size: .55em;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: #9aa09b;
+}
+
+.data { display: grid; gap: .55em; min-width: 0; align-self: center; }
+.field { display: grid; gap: .1em; min-width: 0; }
+
+.lbl {
+  font-size: .5em;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #5d635e;
+}
+
+/* The dotted underline doubles as the pencil line on blank templates */
+.val {
+  border-bottom: .06em dotted #8a8f8b;
+  min-height: 1.25em;
+  font-weight: 700;
+  line-height: 1.15;
+  overflow: hidden;
+}
+
+.nombre {
+  font-size: 1em;
+  text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 1.2em;
+}
+
+.equipo { font-size: .85em; white-space: nowrap; text-overflow: ellipsis; }
+
+/* ---------- Number badge ---------- */
+
+.num {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  width: 3.4em;
+  height: 3.6em;
+  color: var(--c1);
+}
+
+.num .lbl { color: inherit; opacity: .85; }
+
+.num .val {
+  border: 0;
+  font-size: 2em;
+  font-weight: 800;
+  line-height: 1;
+  min-height: 1em;
+  overflow: visible;
+}
+
+.num-box .num { border: .1em solid var(--c1); border-radius: .3em; }
+
+.num-circle .num {
+  width: 3.8em;
+  height: 3.8em;
+  border: .12em solid var(--c1);
+  border-radius: 50%;
+}
+
+.num-filled .num { background: var(--c1); color: var(--on-c1); border-radius: .3em; }
+
+.num-shield .num {
+  width: 3.6em;
+  height: 4.2em;
+  padding-bottom: .7em;
+  background: var(--c1);
+  color: var(--on-c1);
+  clip-path: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%);
+}
+
+.num-plain .num { width: auto; min-width: 3em; height: auto; }
+.num-plain .num .val { font-size: 2.7em; }
+
+/* ---------- Signatures ---------- */
+
+.card-sign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  align-self: end;
+}
+
+.sign { display: grid; justify-items: center; min-width: 0; }
+
+.sig-img {
+  width: 100%;
+  height: 1.5em;
+  border-bottom: .06em solid #1a1a1a;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.sig-img img {
+  max-width: 100%;
+  max-height: 1.7em;
+  object-fit: contain;
+  margin-bottom: -.15em;
+}
+
+.sig-name {
+  font-size: .5em;
+  font-weight: 600;
+  margin-top: .3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.sig-name:empty { display: none; }
+
+.sig-rol {
+  font-size: .45em;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #5d635e;
+  margin-top: .2em;
+}
+
+/* ---------- Arrangements: horizontal ---------- */
+
+.arr-fila .main {
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "photo data num" "sign sign sign";
+}
+
+.arr-espejo .main {
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "num data photo" "sign sign sign";
+}
+
+.arr-alto .main {
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "photo data num" "photo sign sign";
+}
+
+.arr-alto-espejo .main {
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "num data photo" "sign sign photo";
+}
+
+.arr-numtop .main {
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "photo num" "photo data" "sign sign";
+}
+
+.arr-numtop .num { justify-self: start; }
+
+.arr-firmas-lado .main {
+  grid-template-columns: auto 1fr 7.2em;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "photo data sign" "photo num sign";
+}
+
+.arr-firmas-lado .num { justify-self: start; }
+.arr-firmas-lado .card-sign { grid-template-columns: 1fr; gap: .7em; align-self: center; }
+
+.arr-alto .photo,
+.arr-alto-espejo .photo,
+.arr-numtop .photo,
+.arr-firmas-lado .photo { --ph: 10em; }
+
+/* ---------- Arrangements: vertical ---------- */
+
+.ori-v .photo { --ph: 9.6em; }
+
+.ori-v.arr-fila .main,
+.ori-v.arr-firmas-lado .main {
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "photo num" "data data" "sign sign";
+}
+
+.ori-v.arr-espejo .main {
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "num photo" "data data" "sign sign";
+}
+
+.ori-v.arr-espejo .photo { justify-self: end; }
+
+.ori-v.arr-alto .main {
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "photo photo" "data num" "sign sign";
+}
+
+.ori-v.arr-alto-espejo .main {
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "photo photo" "num data" "sign sign";
+}
+
+.ori-v.arr-numtop .main {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas: "num" "photo" "data" "sign";
+}
+
+.ori-v.arr-alto .photo,
+.ori-v.arr-alto-espejo .photo,
+.ori-v.arr-numtop .photo { justify-self: center; }
+
+.ori-v.arr-numtop .num { justify-self: center; }
+.ori-v.arr-firmas-lado .card-sign { grid-template-columns: 1fr 1fr; gap: 1em; align-self: end; }
+.ori-v.arr-numtop .photo { --ph: 8.6em; }
+
+/* Number on top with photo on the right (mirror of numtop) */
+.arr-numtop-espejo .main {
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "num photo" "data photo" "sign sign";
+}
+
+.arr-numtop-espejo .num { justify-self: start; }
+
+.ori-v.arr-numtop-espejo .main {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas: "photo" "data" "num" "sign";
+}
+
+.ori-v.arr-numtop-espejo .photo,
+.ori-v.arr-numtop-espejo .num { justify-self: center; }
+
+/* Signatures stacked on the left (mirror of firmas-lado) */
+.arr-firmas-izq .main {
+  grid-template-columns: 7.2em 1fr auto;
+  grid-template-rows: 1fr auto;
+  grid-template-areas: "sign data photo" "sign num photo";
+}
+
+.arr-firmas-izq .num { justify-self: start; }
+.arr-firmas-izq .card-sign { grid-template-columns: 1fr; gap: .7em; align-self: center; }
+
+.ori-v.arr-firmas-izq .main {
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: "photo photo" "data data" "sign num";
+}
+
+.ori-v.arr-firmas-izq .photo { justify-self: center; }
+.ori-v.arr-firmas-izq .num { align-self: end; }
+.ori-v.arr-firmas-izq .card-sign { gap: .5em; align-self: end; }
+
+.arr-numtop-espejo .photo,
+.arr-firmas-izq .photo { --ph: 10em; }
+
+.ori-v.arr-numtop-espejo .photo { --ph: 9em; }
+.ori-v.arr-firmas-izq .photo { --ph: 9.6em; }
+
+/* =========================================================
+   Skins
+   Decoration lives only in the header and card edges, so it
+   never overlaps player data.
+   ========================================================= */
+
+/* Separator between header and body, on whichever side faces the body */
+:is(.hp-top, .hp-left):is(.skin-gradient, .skin-split, .skin-outline) .head { border-block-end: var(--sep) solid var(--c2); }
+:is(.hp-bottom, .hp-right):is(.skin-gradient, .skin-split, .skin-outline) .head { border-block-start: var(--sep) solid var(--c2); }
+
+.skin-gradient { --sep: .15em; }
+.skin-split { --sep: .32em; }
+.skin-outline { --sep: .1em; }
+
+.skin-gradient .head { background: linear-gradient(120deg, var(--c1), color-mix(in srgb, var(--c1) 55%, #000)); }
+
+.skin-outline { border: .22em solid var(--c1); }
+.skin-outline .head { background: transparent; color: var(--c1); }
+.skin-outline .meta { color: #5d635e; }
+.skin-outline .meta b { color: var(--c1); }
+
+.skin-tinted .main { background: color-mix(in srgb, var(--c1) 8%, #fff); }
+.skin-tinted .photo { background: #fff; }
+
+/* Stripes at the far end of the header band */
+.skin-stripes .head {
+  padding-inline-end: 5em;
+  background:
+    repeating-linear-gradient(115deg, transparent 0 .35em, var(--c2) .35em .7em) right center / 4.4em 100% no-repeat,
+    var(--c1);
+}
+
+.skin-stripes:is(.hp-left, .hp-right) .head { background-position: center top; background-size: 100% 4.4em; }
+
+/* Angled cut at the far end of the header */
+.skin-angled .head { padding-inline-end: 3em; }
+.skin-angled.hp-top .head { clip-path: polygon(0 0, 100% 0, calc(100% - 2.6em) 100%, 0 100%); }
+.skin-angled.hp-bottom .head { clip-path: polygon(0 0, calc(100% - 2.6em) 0, 100% 100%, 0 100%); }
+.skin-angled.hp-left .head { clip-path: polygon(0 0, 100% 2.6em, 100% 100%, 0 100%); }
+.skin-angled.hp-right .head { clip-path: polygon(0 2.6em, 100% 0, 100% 100%, 0 100%); }
+
+.skin-angled.hp-top::after,
+.skin-angled.hp-bottom::after { content: ""; position: absolute; right: 0; width: 1.6em; height: .3em; background: var(--c2); }
+.skin-angled.hp-top::after { bottom: 0; }
+.skin-angled.hp-bottom::after { top: 0; }
+.skin-angled.hp-left::after,
+.skin-angled.hp-right::after { content: ""; position: absolute; bottom: 0; width: .3em; height: 1.6em; background: var(--c2); }
+.skin-angled.hp-left::after { right: 0; }
+.skin-angled.hp-right::after { left: 0; }
+
+/* Ticket: perforated edge between stub and body */
+.skin-ticket .head::after {
+  content: "";
+  position: absolute;
+  border: 0 dashed rgba(255, 255, 255, .7);
+}
+
+.skin-ticket:is(.hp-top, .hp-bottom) .head::after { left: .4em; right: .4em; border-top-width: .08em; }
+.skin-ticket.hp-top .head::after { bottom: .2em; }
+.skin-ticket.hp-bottom .head::after { top: .2em; }
+.skin-ticket:is(.hp-left, .hp-right) .head::after { top: .4em; bottom: .4em; border-left-width: .08em; }
+.skin-ticket.hp-left .head::after { right: .2em; }
+.skin-ticket.hp-right .head::after { left: .2em; }
+
+/* Corners: L-shaped brackets inside the card padding, like a photo frame */
+.skin-corners::before {
+  content: "";
+  position: absolute;
+  inset: .16em;
+  z-index: 2;
+  pointer-events: none;
+  --l: 1.3em;
+  --t: .2em;
+  --g: linear-gradient(var(--c2), var(--c2));
+  background:
+    var(--g) left top / var(--l) var(--t) no-repeat,
+    var(--g) left top / var(--t) var(--l) no-repeat,
+    var(--g) right top / var(--l) var(--t) no-repeat,
+    var(--g) right top / var(--t) var(--l) no-repeat,
+    var(--g) left bottom / var(--l) var(--t) no-repeat,
+    var(--g) left bottom / var(--t) var(--l) no-repeat,
+    var(--g) right bottom / var(--l) var(--t) no-repeat,
+    var(--g) right bottom / var(--t) var(--l) no-repeat;
+}
+
+/* Double: thin accent band on the edge opposite the header */
+.skin-double::after { content: ""; position: absolute; background: var(--c2); }
+.skin-double.hp-top::after { left: 0; right: 0; bottom: 0; height: .28em; }
+.skin-double.hp-bottom::after { left: 0; right: 0; top: 0; height: .28em; }
+.skin-double.hp-left::after { top: 0; bottom: 0; right: 0; width: .28em; }
+.skin-double.hp-right::after { top: 0; bottom: 0; left: 0; width: .28em; }
+
+/* Pill: league name inside a capsule on a white header */
+.skin-pill { --sep: .08em; }
+:is(.hp-top, .hp-left).skin-pill .head { border-block-end: var(--sep) solid var(--c2); }
+:is(.hp-bottom, .hp-right).skin-pill .head { border-block-start: var(--sep) solid var(--c2); }
+
+.skin-pill .head { background: transparent; color: var(--c1); align-items: flex-start; }
+
+.skin-pill .liga {
+  max-width: 100%;
+  padding: .12em .6em;
+  border-radius: 1em;
+  background: var(--c1);
+  color: var(--on-c1);
+}
+
+.skin-pill .meta { color: #5d635e; padding-inline-start: .6em; max-width: 100%; }
+.skin-pill .meta b { color: var(--c1); }
+
+/* ---------- Print ---------- */
+
+@media print {
+  body { background: #fff; }
+  .app { display: block; }
+  .panel, .preview h2, .preview-card { display: none !important; }
+  .preview { padding: 0; display: block; }
+  .hojas { display: block; }
+  .sheet {
+    zoom: 1;
+    box-shadow: none;
+    break-after: page;
+    overflow: hidden;
+  }
+  .sheet:last-child { break-after: auto; }
+}
+
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; }
+  .panel { position: static; height: auto; border-right: 0; }
+  #form { overflow: visible; }
+  .preview { padding: 16px; }
+}

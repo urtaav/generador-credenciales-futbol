@@ -1,0 +1,26 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Dependencias y builds (por si se agregan herramientas)
+node_modules/
+dist/
+build/
+
+# Secretos: nunca deben subirse
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.*
+
+# Archivos generados al usar la app
+*.pdf
+credenciales-configuraciones-*.json

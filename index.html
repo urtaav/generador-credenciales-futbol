@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Credenciales de Torneo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style id="page-style"></style>
+</head>
+<body>
+  <div class="app">
+    <aside class="panel" aria-label="Configuración">
+      <header class="panel-head">
+        <h1>Credenciales</h1>
+        <p>Torneo de fútbol · listas para imprimir y recortar</p>
+      </header>
+
+      <form id="form" autocomplete="off" onsubmit="return false">
+        <fieldset class="configs">
+          <legend>Configuraciones guardadas</legend>
+          <div class="save-row">
+            <input id="config-nombre" type="text" placeholder="Ej. Opción A — azul" maxlength="40" aria-label="Nombre de la configuración">
+            <button type="button" id="config-guardar" class="btn">Guardar</button>
+          </div>
+          <ul id="config-lista" class="config-list"></ul>
+          <p id="config-uso" class="hint"></p>
+          <div class="row actions">
+            <button type="button" id="config-exportar" class="btn btn-ghost btn-sm">Exportar .json</button>
+            <label class="btn btn-ghost btn-sm file-btn">Importar .json
+              <input id="config-importar" type="file" accept=".json,application/json" hidden>
+            </label>
+          </div>
+          <p id="config-info" class="hint" aria-live="polite">Guarda el diseño, colores, liga, firmas y tamaño. La lista de jugadores se queda igual al cambiar de configuración.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Torneo</legend>
+          <label>Nombre de la liga
+            <input name="liga" type="text" placeholder="Liga Municipal de Fútbol" maxlength="60">
+          </label>
+          <div class="row">
+            <label>Año
+              <input name="anio" type="number" min="1900" max="2999">
+            </label>
+            <label>Temporada
+              <select name="temporada">
+                <option value="A">A</option>
+                <option value="B">B</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Jugadores</legend>
+          <div class="tabs" role="radiogroup" aria-label="Origen de datos">
+            <label class="tab"><input type="radio" name="modo" value="lista" checked><span>Lista</span></label>
+            <label class="tab"><input type="radio" name="modo" value="blanco"><span>En blanco</span></label>
+          </div>
+
+          <div class="modo-lista">
+            <label>Equipo por defecto
+              <input name="equipo" type="text" placeholder="Deportivo San Juan" maxlength="40">
+            </label>
+            <label>Un jugador por línea: <small>Nombre, Número, Equipo (opcional)</small>
+              <textarea name="lista" rows="7" placeholder="Juan Pérez López, 10&#10;Carlos Ramírez, 7&#10;Luis Hernández, 1, Atlético Norte"></textarea>
+            </label>
+            <div class="row actions">
+              <label class="btn btn-ghost file-btn">Cargar CSV
+                <input id="csv" type="file" accept=".csv,text/csv,text/plain" hidden>
+              </label>
+              <button type="button" id="csv-ejemplo" class="btn btn-ghost">Descargar ejemplo</button>
+            </div>
+            <p id="lista-info" class="hint" aria-live="polite"></p>
+          </div>
+
+          <div class="modo-blanco" hidden>
+            <label>Cantidad de credenciales en blanco
+              <input name="blancos" type="number" min="1" max="500" value="10">
+            </label>
+            <p class="hint">Se imprimen con la liga, el año y las firmas. Nombre, equipo y número quedan en blanco para llenarlos a lápiz.</p>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Firmas</legend>
+          <div class="firma" data-rol="presidente">
+            <label>Presidente
+              <input name="presidente" type="text" placeholder="Nombre (opcional)" maxlength="40">
+            </label>
+            <label class="firma-drop">
+              <input type="file" accept="image/*" data-firma="presidente" hidden>
+              <img alt="Firma del presidente" hidden>
+              <span>Subir firma</span>
+            </label>
+            <button type="button" class="btn-x" data-quitar="presidente" title="Quitar firma" hidden>×</button>
+          </div>
+          <div class="firma" data-rol="vicepresidente">
+            <label>Vicepresidente
+              <input name="vicepresidente" type="text" placeholder="Nombre (opcional)" maxlength="40">
+            </label>
+            <label class="firma-drop">
+              <input type="file" accept="image/*" data-firma="vicepresidente" hidden>
+              <img alt="Firma del vicepresidente" hidden>
+              <span>Subir firma</span>
+            </label>
+            <button type="button" class="btn-x" data-quitar="vicepresidente" title="Quitar firma" hidden>×</button>
+          </div>
+          <p class="hint">Haz clic o arrastra la imagen al recuadro. PNG con fondo transparente queda mejor. Sin imagen se deja la línea para firmar a mano.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Diseño</legend>
+          <div class="tabs" role="radiogroup" aria-label="Orientación">
+            <label class="tab"><input type="radio" name="orientacion" value="h" checked><span>Horizontal</span></label>
+            <label class="tab"><input type="radio" name="orientacion" value="v"><span>Vertical</span></label>
+          </div>
+          <label>Mostrar diseños con fondo
+            <select id="filtro-fondo"></select>
+          </label>
+          <div id="designs" class="designs" role="radiogroup" aria-label="Diseño"></div>
+          <div class="row">
+            <label>Color principal
+              <input name="color1" type="color">
+            </label>
+            <label>Color secundario
+              <input name="color2" type="color">
+            </label>
+          </div>
+          <label>Fondo
+            <select name="fondo" id="fondo"></select>
+          </label>
+          <button type="button" id="reset-colores" class="btn btn-ghost btn-sm">Restablecer colores y fondo del diseño</button>
+        </fieldset>
+
+        <fieldset>
+          <legend>Impresión</legend>
+          <label>Tamaño de credencial
+            <select name="tamano">
+              <option value="ine">INE / Licencia (85.6 × 54 mm)</option>
+              <option value="custom">Personalizado</option>
+            </select>
+          </label>
+          <div class="row tamano-custom" hidden>
+            <label>Lado largo (mm)
+              <input name="ancho" type="number" min="40" max="200" step="0.1" value="85.6">
+            </label>
+            <label>Lado corto (mm)
+              <input name="alto" type="number" min="25" max="150" step="0.1" value="54">
+            </label>
+          </div>
+          <div class="row">
+            <label>Hoja
+              <select name="hoja">
+                <option value="carta">Carta</option>
+                <option value="oficio">Oficio</option>
+                <option value="a4">A4</option>
+              </select>
+            </label>
+            <label>Por hoja
+              <input name="porHoja" type="number" min="1" value="8">
+            </label>
+          </div>
+          <label class="check"><input name="corte" type="checkbox" checked> Líneas de corte</label>
+          <p id="layout-info" class="hint" aria-live="polite"></p>
+        </fieldset>
+      </form>
+
+      <div class="panel-foot">
+        <button type="button" id="imprimir" class="btn btn-primary">Exportar PDF</button>
+        <p class="hint">En el diálogo elige <b>Guardar como PDF</b>, márgenes <b>Ninguno</b> y escala <b>100%</b>. Activa <b>Gráficos de fondo</b> si no salen los colores.</p>
+      </div>
+    </aside>
+
+    <main class="preview" aria-label="Vista previa">
+      <section class="preview-card">
+        <h2 id="muestra-titulo">Vista previa</h2>
+        <div id="muestra" class="muestra"></div>
+      </section>
+      <section class="preview-sheets">
+        <h2 id="hojas-titulo">Hojas</h2>
+        <div id="hojas" class="hojas"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="tpl-card">
+    <article class="card">
+      <header class="head">
+        <span class="liga"></span>
+        <span class="meta">Torneo <b class="anio"></b> · Temporada <b class="temp"></b></span>
+      </header>
+      <div class="main">
+        <div class="bg" aria-hidden="true"></div>
+        <div class="photo"><span>Foto</span></div>
+        <div class="data">
+          <div class="field">
+            <span class="lbl">Jugador</span>
+            <span class="val nombre"></span>
+          </div>
+          <div class="field">
+            <span class="lbl">Equipo</span>
+            <span class="val equipo"></span>
+          </div>
+        </div>
+        <div class="num">
+          <span class="lbl">No.</span>
+          <span class="val numero"></span>
+        </div>
+        <div class="card-sign">
+          <div class="sign" data-rol="presidente">
+            <div class="sig-img"></div>
+            <span class="sig-name"></span>
+            <span class="sig-rol">Presidente</span>
+          </div>
+          <div class="sign" data-rol="vicepresidente">
+            <div class="sig-img"></div>
+            <span class="sig-name"></span>
+            <span class="sig-rol">Vicepresidente</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="designs.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

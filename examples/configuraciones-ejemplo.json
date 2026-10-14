@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "configs": [
+    {
+      "id": "ejemplo-a",
+      "nombre": "Opción A — Cancha verde",
+      "fecha": "2026-10-14T12:00:00.000Z",
+      "settings": {
+        "liga": "Liga Municipal Benito Juárez", "anio": "2026", "temporada": "A",
+        "presidente": "Roberto Gómez", "vicepresidente": "Ana Torres",
+        "orientacion": "h", "diseno": "cancha", "color1": "#2d7a3a", "color2": "#ffffff", "fondo": "auto",
+        "tamano": "ine", "ancho": "85.6", "alto": "54", "hoja": "carta", "porHoja": "8", "corte": true
+      },
+      "firmas": { "presidente": null, "vicepresidente": null }
+    },
+    {
+      "id": "ejemplo-b",
+      "nombre": "Opción B — Escudo vino",
+      "fecha": "2026-10-14T12:00:00.000Z",
+      "settings": {
+        "liga": "Liga Municipal Benito Juárez", "anio": "2026", "temporada": "A",
+        "presidente": "Roberto Gómez", "vicepresidente": "Ana Torres",
+        "orientacion": "h", "diseno": "escudo", "color1": "#7a1f2b", "color2": "#d4a017", "fondo": "auto",
+        "tamano": "ine", "ancho": "85.6", "alto": "54", "hoja": "carta", "porHoja": "8", "corte": true
+      },
+      "firmas": { "presidente": null, "vicepresidente": null }
+    },
+    {
+      "id": "ejemplo-c",
+      "nombre": "Opción C — Trofeo vertical",
+      "fecha": "2026-10-14T12:00:00.000Z",
+      "settings": {
+        "liga": "Liga Municipal Benito Juárez", "anio": "2026", "temporada": "A",
+        "presidente": "Roberto Gómez", "vicepresidente": "Ana Torres",
+        "orientacion": "v", "diseno": "trofeo", "color1": "#8a6d1d", "color2": "#1a1a1a", "fondo": "auto",
+        "tamano": "ine", "ancho": "85.6", "alto": "54", "hoja": "oficio", "porHoja": "9", "corte": true
+      },
+      "firmas": { "presidente": null, "vicepresidente": null }
+    }
+  ]
+}
