@@ -22,5 +22,5 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y e
 - Configuraciones guardadas con exportación e importación en JSON; las firmas se guardan una sola vez.
 - Autoguardado del estado actual.
 
-[Sin publicar]: https://github.com/urtaav/fichaje-credenciales/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/urtaav/fichaje-credenciales/releases/tag/v1.0.0
+[Sin publicar]: https://github.com/urtaav/generador-credenciales-futbol/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/urtaav/generador-credenciales-futbol/releases/tag/v1.0.0

@@ -6,7 +6,7 @@
 
 Genera credenciales de jugador para ligas y torneos de fútbol, listas para **imprimir en PDF, recortar y entregar**. Pega tu lista de jugadores (o sube un CSV de Excel), elige uno de los **50 diseños** y exporta. Sin instalar nada, sin cuentas y sin subir datos a ningún servidor.
 
-**[▶ Probar en línea](https://urtaav.github.io/fichaje-credenciales/)**
+**[▶ Probar en línea](https://urtaav.github.io/generador-credenciales-futbol/)**
 
 ![Fichaje: panel de configuración y vista previa](docs/screenshots/app.png)
 
@@ -45,13 +45,13 @@ Genera credenciales de jugador para ligas y torneos de fútbol, listas para **im
 
 ## Inicio rápido
 
-**Opción 1: en línea.** Abre la [demo](https://urtaav.github.io/fichaje-credenciales/).
+**Opción 1: en línea.** Abre la [demo](https://urtaav.github.io/generador-credenciales-futbol/).
 
 **Opción 2: local.**
 
 ```bash
-git clone https://github.com/urtaav/fichaje-credenciales.git
-cd fichaje-credenciales
+git clone https://github.com/urtaav/generador-credenciales-futbol.git
+cd generador-credenciales-futbol
 # Abre index.html con doble clic, o sirve la carpeta:
 npx serve .
 ```
@@ -185,7 +185,7 @@ Los encabezados laterales usan `writing-mode: sideways-lr`, disponible en navega
 ## Estructura del proyecto
 
 ```text
-fichaje-credenciales/
+generador-credenciales-futbol/
 ├── index.html        # Estructura de la app y plantilla de la credencial
 ├── styles.css        # UI, layouts de credencial, estilos e impresión
 ├── designs.js        # Catálogo de 50 diseños y fondos SVG

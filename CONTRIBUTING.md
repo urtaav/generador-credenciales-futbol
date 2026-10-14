@@ -16,8 +16,8 @@ Al participar aceptas el [Código de Conducta](CODE_OF_CONDUCT.md).
 No hay dependencias ni paso de build.
 
 ```bash
-git clone https://github.com/<tu-usuario>/fichaje-credenciales.git
-cd fichaje-credenciales
+git clone https://github.com/<tu-usuario>/generador-credenciales-futbol.git
+cd generador-credenciales-futbol
 ```
 
 Abre `index.html` en el navegador. Si prefieres un servidor local (por ejemplo, para probar desde el celular):
